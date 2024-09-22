@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import Header from '@/components/icons/Header.vue';
 
 </script>
 
 <template>
   <div>
-    <Header/>
   <section class="bg-gray-50 py-8 antialiased dark:bg-gray-900 md:py-12" style="background-color: #A8DADC">
   <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
     <!-- Heading & Filters -->

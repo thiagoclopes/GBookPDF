@@ -1,3 +1,16 @@
+
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const email = ref<string>('');
+const senha = ref<string>('');
+
+function saveData() {
+  console.log('Email:', email.value);
+  console.log('Senha:', senha.value);
+}
+</script>
+
 <template>
     <section class="bg-gray-50 dark:bg-gray-900">
         <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -41,20 +54,3 @@
     </section>
 </template>
 
-<script>
-export default {
-    data() {
-        return {
-            email: '',
-            senha: ''
-        };
-    },
-    methods: {
-        saveData() {
-            console.log('Email:', this.email);
-            console.log('Senha:', this.senha);
-        }
-    }
-}
-</script>
- 
