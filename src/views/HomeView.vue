@@ -1,10 +1,12 @@
-<script setup lang="ts">
 
+<script setup lang="ts">
+import Header from '@/components/AppHeader.vue';
 </script>
 
 <template>
   <div>
-  <section class="bg-gray-50 py-8 antialiased dark:bg-gray-900 md:py-12" style="background-color: #A8DADC">
+    <Header/>
+    <section class="bg-gray-50 py-8 antialiased dark:bg-gray-900 md:py-12" style="background-color: #A8DADC">
   <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
     <!-- Heading & Filters -->
     <div class="mb-4 items-end justify-between space-y-4 sm:flex sm:space-y-0 md:mb-8">
