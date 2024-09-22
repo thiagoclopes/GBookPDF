@@ -7,24 +7,5 @@
     {
       "path": "./tsconfig.app.json"
     }
-  ],
-  "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
-    "moduleResolution": "node",
-    "strict": true,
-    "jsx": "preserve",
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "types": ["vite/client"]  // Inclua se estiver usando Vite
-  },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.d.ts",
-    "src/**/*.vue"  // Inclui arquivos .vue para serem reconhecidos pelo TypeScript
-  ],
-  "exclude": [
-    "node_modules"
   ]
 }
