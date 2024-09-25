@@ -1,6 +1,21 @@
 
 <script setup lang="ts">
 import Header from '@/components/AppHeader.vue';
+import { Input } from '@/components/ui/input'
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import { Button } from '@/components/ui/button'
+
+import IconSearch from '../components/icons/IconSearch.vue'
+
+import { ref } from 'vue';
+const selectedOption = ref("Titulo e Autor");
 </script>
 
 <template>
@@ -40,6 +55,39 @@ import Header from '@/components/AppHeader.vue';
           </ol>
         </nav>
         <h2 class="mt-3 text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Religiosos</h2>
+      </div>
+      <div class="flex flex-1 mx-8">
+        <div class="w-[20%]">
+          <Select v-model="selectedOption">
+            <SelectTrigger class="rounded-r-none">
+              <SelectValue/>
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value="Titulo e Autor">
+                  Titulo e Autor
+                </SelectItem>
+                <SelectItem value="Titulo">
+                  Titulo
+                </SelectItem>
+                <SelectItem value="Autor">
+                  Autor
+                </SelectItem>
+                <SelectItem value="Assunto">
+                  Assunto
+                </SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+        <div class="w-[70%]">
+          <Input placeholder="O que você está procurando?" class="rounded-none"/>
+        </div>
+        <div class="w-[10%]">
+          <Button variant="outline" class="rounded-l-none">
+            <IconSearch class="w-4 h-4"/>
+          </Button>
+        </div>
       </div>
       <div class="flex items-center space-x-4">
         <button data-modal-toggle="filterModal" data-modal-target="filterModal" type="button" class="flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700 sm:w-auto">
