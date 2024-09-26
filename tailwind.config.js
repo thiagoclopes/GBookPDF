@@ -23,6 +23,7 @@ module.exports = {
     },
     extend: {
       colors: {
+        customBg: "rgb(241, 250, 238)",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
