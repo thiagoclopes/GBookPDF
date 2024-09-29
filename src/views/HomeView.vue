@@ -56,10 +56,10 @@ const selectedOption = ref("Titulo e Autor");
         </nav>
         <h2 class="mt-3 text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Religiosos</h2>
       </div>
-      <div class="flex flex-1 mx-8">
-        <div class="w-[20%]">
+      <div class="flex flex-1 w-full md:mx-8 sm:mx-0">
+        <div class="w-[30vh]">
           <Select v-model="selectedOption">
-            <SelectTrigger class="rounded-r-none bg-customBg">
+            <SelectTrigger class="rounded-r-none bg-customBg ">
               <SelectValue/>
             </SelectTrigger>
             <SelectContent>
@@ -80,11 +80,11 @@ const selectedOption = ref("Titulo e Autor");
             </SelectContent>
           </Select>
         </div>
-        <div class="w-[70%]">
-          <Input placeholder="O que você está procurando?" class="rounded-none bg-customBg"/>
+        <div class="w-full">
+          <Input placeholder="O que você está procurando?" class="rounded-none bg-customBg "/>
         </div>
-        <div class="w-[10%]">
-          <Button variant="outline" class="rounded-l-none bg-customBg">
+        <div class="w-[10vh]">
+          <Button variant="outline" class="rounded-l-none bg-customBg outline-none">
             <IconSearch class="w-4 h-4"/>
           </Button>
         </div>
