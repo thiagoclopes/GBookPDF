@@ -14,10 +14,18 @@ import { Button } from '@/components/ui/button'
 
 import IconSearch from '../components/icons/IconSearch.vue'
 
-import { ref } from 'vue';
+import { ref, Ref } from 'vue';
 const selectedOption = ref("Titulo e Autor");
+const searchQuery = ref("");
 
-const products = ref([
+interface Book {
+  name: string;
+  image: string;
+  author: string;
+  subject: string;
+}
+
+const products = ref<Book[]>([
   {
     name: "O poder do hábito: Por que fazemos o que fazemos na vida e nos negócios",
     image: "https://m.media-amazon.com/images/I/815iPX0SgkL._SY466_.jpg",
@@ -55,6 +63,28 @@ const products = ref([
     subject: 'Finanças Pessoais, Educação Financeira, Prosperidade',
   },
 ]);
+
+const filteredBooks: Ref<Book[]> = ref([]);
+const filterBooks = () => {
+  const query = searchQuery.value.toLowerCase();
+
+  // Filtro de acordo com a opção selecionada
+  filteredBooks.value = products.value.filter((book) => {
+    if (selectedOption.value === "Titulo e Autor") {
+      return (
+        book.name.toLowerCase().includes(query) || book.author.toLowerCase().includes(query)
+      );
+    } else if (selectedOption.value === "Titulo") {
+      return book.name.toLowerCase().includes(query);
+    } else if (selectedOption.value === "Autor") {
+      return book.author.toLowerCase().includes(query);
+    } else if (selectedOption.value === "Assunto") {
+      return book.subject.toLowerCase().includes(query);
+    }
+  });
+};
+
+filteredBooks.value = products.value;
 
 </script>
 
@@ -96,7 +126,7 @@ const products = ref([
         </nav>
         <h2 class="mt-3 text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Religiosos</h2>
       </div>
-      <div class="flex flex-1 w-full md:mx-8">
+      <form class="flex flex-1 w-full md:mx-8" @submit.prevent="filterBooks">
         <div class="lg:w-[30vh] md:w-[15vh]">
           <Select v-model="selectedOption">
             <SelectTrigger class="rounded-r-none bg-customBg ">
@@ -121,14 +151,18 @@ const products = ref([
           </Select>
         </div>
         <div class="w-full">
-          <Input placeholder="O que você está procurando?" class="rounded-none bg-customBg "/>
+          <Input
+          v-model="searchQuery"
+          placeholder="O que você está procurando?"
+          class="rounded-none bg-customBg"
+          />
         </div>
         <div class="w-[10vh]">
-          <Button variant="outline" class="rounded-l-none bg-customBg outline-none">
-            <IconSearch class="w-4 h-4"/>
+          <Button type="submit" variant="outline" class="rounded-l-none bg-customBg outline-none" @click="filterBooks">
+            <IconSearch class="w-4 h-4" />
           </Button>
         </div>
-      </div>
+      </form>
       <div class="flex items-center space-x-4">
         <Button data-modal-toggle="filterModal" data-modal-target="filterModal" type="button" class="flex w-full items-center justify-center rounded-lg border border-gray-200 bg-customBg px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700 sm:w-auto md:w-auto">
           <svg class="-ms-0.5 me-2 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -174,7 +208,7 @@ const products = ref([
     </div>
     <div class="mb-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-4">
       <div
-        v-for="(product, index) in products"
+        v-for="(product, index) in filteredBooks"
         :key="index"
         class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800 flex flex-col justify-between"
         style="background-color: #F1FAEE"
