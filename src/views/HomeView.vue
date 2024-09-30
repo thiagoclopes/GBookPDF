@@ -185,42 +185,43 @@ const products = ref([
           </a>
         </div>
         <div class="pt-2 w-full">
-          <div class="mb-4 flex items-center justify-between gap-4">
-            <div class="flex items-center justify-end gap-1">
-
-              <div class="flex flex-col mt-2">
-                <p class="text-xs font-medium text-gray-900 dark:text-white">{{ product.author }}</p>
-                <p class="text-xs font-medium text-gray-500 dark:text-gray-400">({{ product.subject }})</p>
-              </div>
-              
-              <!-- Quick look button -->
-              <button
-                type="button"
-                data-tooltip-target="tooltip-quick-look"
-                class="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-              >
-                <span class="sr-only">Quick look</span>
-                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z" />
-                  <path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                </svg>
-              </button>
-              <!-- Add to favorites button -->
-              <button
-                type="button"
-                class="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-              >
-                <span class="sr-only">Add to favorites</span>
-                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6C6.5 1 1 8 5.8 13l6.2 7 6.2-7C23 8 17.5 1 12 6Z" />
-                </svg>
-              </button>
-            </div>
+          <div class="pt-2 mb-2 flex items-center justify-between gap-4">
+            <a href="#" class="text-md font-semibold leading-tight text-gray-900 hover:underline dark:text-white line-clamp-1">
+              {{ product.name }}
+            </a>
           </div>
         </div>
-        <a href="#" class="text-lg font-semibold leading-tight text-gray-900 hover:underline dark:text-white line-clamp-1">
-          {{ product.name }}
-        </a>
+        
+        <div class="flex items-center justify-end gap-1">
+
+          <div class="flex flex-col mt-2">
+            <p class="text-xs font-medium text-gray-900 dark:text-white">{{ product.author }}</p>
+            <p class="text-xs font-medium text-gray-500 dark:text-gray-400">({{ product.subject }})</p>
+          </div>
+
+          <!-- Quick look button -->
+          <button
+            type="button"
+            data-tooltip-target="tooltip-quick-look"
+            class="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+          >
+            <span class="sr-only">Quick look</span>
+            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z" />
+              <path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+            </svg>
+          </button>
+          <!-- Add to favorites button -->
+          <button
+            type="button"
+            class="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+          >
+            <span class="sr-only">Add to favorites</span>
+            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6C6.5 1 1 8 5.8 13l6.2 7 6.2-7C23 8 17.5 1 12 6Z" />
+            </svg>
+          </button>
+        </div>
       </div>
     </div>
     <div class="w-full text-center">
