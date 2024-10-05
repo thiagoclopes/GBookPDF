@@ -57,7 +57,7 @@
                     </li>
                     <li>
                         <router-link
-                        to="/generos"
+                        to="/"
                         class="block py-2 pr-4 pl-3 text-white border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:p-0 dark:text-white lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
                         >
                         Gêneros
@@ -65,7 +65,7 @@
                     </li>
                     <li>
                         <router-link
-                        to="/contato"
+                        to="/"
                         class="block py-2 pr-4 pl-3 text-white border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:p-0 dark:text-white lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
                         >
                         Contato
