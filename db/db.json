@@ -1,7 +1,7 @@
 {
   "books": [
     {
-      "id": 1,
+      "id": "1",
       "name": "O poder do hábito: Por que fazemos o que fazemos na vida e nos negócios",
       "image": "https://m.media-amazon.com/images/I/815iPX0SgkL._SY466_.jpg",
       "author": "Charles Duhigg e Rafael Mantovani",
@@ -9,7 +9,7 @@
       "subject": "Psicologia, Desenvolvimento Pessoal, Hábitos"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Sapiens: Uma breve história da humanidade",
       "image": "https://m.media-amazon.com/images/I/41FU42ESk5L._SY445_SX342_.jpg",
       "author": "Yuval Noah Harari",
@@ -17,7 +17,7 @@
       "subject": "História, Antropologia, Evolução Humana"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "A coragem de ser imperfeito",
       "image": "https://m.media-amazon.com/images/I/61rRRbfINJL._SY466_.jpg",
       "author": "Brené Brown",
@@ -25,7 +25,7 @@
       "subject": "Psicologia, Vulnerabilidade, Autoaceitação"
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "Inteligência emocional: A teoria revolucionária que redefine o que é ser inteligente",
       "image": "https://m.media-amazon.com/images/I/41ueE4zSrAL._SY445_SX342_.jpg",
       "author": "Daniel Goleman",
@@ -33,7 +33,7 @@
       "subject": "Psicologia, Inteligência Emocional, Desenvolvimento Pessoal"
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "Mindset: A nova psicologia do sucesso",
       "image": "https://m.media-amazon.com/images/I/41suUFbw-eL._SY445_SX342_.jpg",
       "author": "Carol S. Dweck",
@@ -45,7 +45,8 @@
       "image": "https://m.media-amazon.com/images/I/41Xc4wyyMIL._SY445_SX342_.jpg",
       "author": "George S. Clason",
       "isFavorite": false,
-      "subject": "Finanças Pessoais, Educação Financeira, Prosperidade"
+      "subject": "Finanças Pessoais, Educação Financeira, Prosperidade",
+      "id": "956d"
     }
   ],
   "auth": []
