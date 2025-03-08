@@ -1,83 +1,83 @@
 <script setup lang="ts">
-import axios from 'axios';
-import { ref, Ref, onMounted } from 'vue';
-import HeaderView from '@/components/AppHeader.vue';
-import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Button } from '@/components/ui/button';
-import IconSearch from '../components/icons/IconSearch.vue';
-import { useRouter } from 'vue-router';
+  import axios from 'axios';
+  import { ref, Ref, onMounted } from 'vue';
+  import HeaderView from '@/components/AppHeader.vue';
+  import { Input } from '@/components/ui/input';
+  import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+  } from '@/components/ui/select';
+  import { Button } from '@/components/ui/button';
+  import IconSearch from '../components/icons/IconSearch.vue';
+  import { useRouter } from 'vue-router';
 
-const router = useRouter();
+  const router = useRouter();
 
-const selectedOption = ref("Titulo e Autor");
-const selectedFilters = ref("Filtros");
-const searchQuery = ref("");
+  const selectedOption = ref("Titulo e Autor");
+  const selectedFilters = ref("Filtros");
+  const searchQuery = ref("");
 
-interface Book {
-  id: number;
-  name: string;
-  image: string;
-  author: string;
-  subject: string;
-  isFavorite: boolean;
-}
-
-const products: Ref<Book[]> = ref([]);
-const filteredBooks: Ref<Book[]> = ref([]);
-
-const fetchBooks = async () => {
-  try {
-    const booksResponse = await axios.get('http://localhost:3000/books');
-    products.value = booksResponse.data.map((book: Book, index: number) => ({
-      ...book,
-      id: book.id ?? index + 1,
-      isFavorite: book.isFavorite || false,
-    }));
-    filteredBooks.value = products.value;
-  } catch (error) {
-    console.error("Erro ao buscar os livros: ", error);
+  interface Book {
+    id: number;
+    name: string;
+    image: string;
+    author: string;
+    subject: string;
+    isFavorite: boolean;
   }
-};
 
-const filterBooks = () => {
-  const query = searchQuery.value.toLowerCase();
-  filteredBooks.value = products.value.filter((book) => {
-    if (selectedOption.value === "Titulo e Autor") {
-      return (
-        book.name.toLowerCase().includes(query) || book.author.toLowerCase().includes(query)
-      );
-    } else if (selectedOption.value === "Titulo") {
-      return book.name.toLowerCase().includes(query);
-    } else if (selectedOption.value === "Autor") {
-      return book.author.toLowerCase().includes(query);
-    } else if (selectedOption.value === "Assunto") {
-      return book.subject.toLowerCase().includes(query);
+  const products: Ref<Book[]> = ref([]);
+  const filteredBooks: Ref<Book[]> = ref([]);
+
+  const fetchBooks = async () => {
+    try {
+      const booksResponse = await axios.get('http://localhost:3000/books');
+      products.value = booksResponse.data.map((book: Book, index: number) => ({
+        ...book,
+        id: book.id ?? index + 1,
+        isFavorite: book.isFavorite || false,
+      }));
+      filteredBooks.value = products.value;
+    } catch (error) {
+      console.error("Erro ao buscar os livros: ", error);
     }
-  });
-};
+  };
 
-const toggleFavorite = async (book: Book) => {
-  book.isFavorite = !book.isFavorite;
-  try {
-    await axios.patch(`http://localhost:3000/books/${book.id}`, { isFavorite: book.isFavorite });
-  } catch (error) {
-    console.error("Erro ao atualizar favorito: ", error);
-  }
-};
+  const filterBooks = () => {
+    const query = searchQuery.value.toLowerCase();
+    filteredBooks.value = products.value.filter((book) => {
+      if (selectedOption.value === "Titulo e Autor") {
+        return (
+          book.name.toLowerCase().includes(query) || book.author.toLowerCase().includes(query)
+        );
+      } else if (selectedOption.value === "Titulo") {
+        return book.name.toLowerCase().includes(query);
+      } else if (selectedOption.value === "Autor") {
+        return book.author.toLowerCase().includes(query);
+      } else if (selectedOption.value === "Assunto") {
+        return book.subject.toLowerCase().includes(query);
+      }
+    });
+  };
 
-const goToBookPage = (bookId: number) => {
-  router.push(`/book/${bookId}`);
-};
+  const toggleFavorite = async (book: Book) => {
+    book.isFavorite = !book.isFavorite;
+    try {
+      await axios.patch(`http://localhost:3000/books/${book.id}`, { isFavorite: book.isFavorite });
+    } catch (error) {
+      console.error("Erro ao atualizar favorito: ", error);
+    }
+  };
 
-onMounted(fetchBooks);
+  const goToBookPage = (bookId: number) => {
+    router.push(`/book/${bookId}`);
+  };
+
+  onMounted(fetchBooks);
 </script>
 
 

@@ -1,11 +1,6 @@
-<script>
+<script setup lang="ts">
 import HeaderView from '@/components/AppHeader.vue';
 
-export default{
-    components: {
-        HeaderView
-    }
-}
 </script>
 
 <template>
