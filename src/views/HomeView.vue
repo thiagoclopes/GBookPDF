@@ -1,7 +1,8 @@
-
 <script setup lang="ts">
-import Header from '@/components/AppHeader.vue';
-import { Input } from '@/components/ui/input'
+import axios from 'axios';
+import { ref, Ref, onMounted } from 'vue';
+import HeaderView from '@/components/AppHeader.vue';
+import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
@@ -9,66 +10,44 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
-import { Button } from '@/components/ui/button'
+} from '@/components/ui/select';
+import { Button } from '@/components/ui/button';
+import IconSearch from '../components/icons/IconSearch.vue';
+import { useRouter } from 'vue-router';
 
-import IconSearch from '../components/icons/IconSearch.vue'
+const router = useRouter();
 
-import { ref, Ref } from 'vue';
 const selectedOption = ref("Titulo e Autor");
 const searchQuery = ref("");
 
 interface Book {
+  id: number;
   name: string;
   image: string;
   author: string;
   subject: string;
+  isFavorite: boolean;
 }
 
-const products = ref<Book[]>([
-  {
-    name: "O poder do hábito: Por que fazemos o que fazemos na vida e nos negócios",
-    image: "https://m.media-amazon.com/images/I/815iPX0SgkL._SY466_.jpg",
-    author: 'Charles Duhigg e Rafael Mantovani',
-    subject: 'Psicologia, Desenvolvimento Pessoal, Hábitos',
-  },
-  {
-    name: "Sapiens: Uma breve história da humanidade",
-    image: "https://m.media-amazon.com/images/I/41FU42ESk5L._SY445_SX342_.jpg",
-    author: 'Yuval Noah Harari',
-    subject: 'História, Antropologia, Evolução Humana',
-  },
-  {
-    name: "A coragem de ser imperfeito",
-    image: "https://m.media-amazon.com/images/I/61rRRbfINJL._SY466_.jpg",
-    author: 'Brené Brown',
-    subject: 'Psicologia, Vulnerabilidade, Autoaceitação',
-  },
-  {
-    name: "Inteligência emocional: A teoria revolucionária que redefine o que é ser inteligente",
-    image: "https://m.media-amazon.com/images/I/41ueE4zSrAL._SY445_SX342_.jpg",
-    author: 'Daniel Goleman',
-    subject: 'Psicologia, Inteligência Emocional, Desenvolvimento Pessoal',
-  },
-  {
-    name: "Mindset: A nova psicologia do sucesso",
-    image: "https://m.media-amazon.com/images/I/41suUFbw-eL._SY445_SX342_.jpg",
-    author: 'Carol S. Dweck',
-    subject: 'Psicologia, Educação, Desenvolvimento Pessoal',
-  },
-  {
-    name: "O homem mais rico da Babilônia",
-    image: "https://m.media-amazon.com/images/I/41Xc4wyyMIL._SY445_SX342_.jpg",
-    author: 'George S. Clason',
-    subject: 'Finanças Pessoais, Educação Financeira, Prosperidade',
-  },
-]);
-
+const products: Ref<Book[]> = ref([]);
 const filteredBooks: Ref<Book[]> = ref([]);
+
+const fetchBooks = async () => {
+  try {
+    const booksResponse = await axios.get('http://localhost:3000/books');
+    products.value = booksResponse.data.map((book: Book, index: number) => ({
+      ...book,
+      id: book.id ?? index + 1,
+      isFavorite: book.isFavorite || false,
+    }));
+    filteredBooks.value = products.value;
+  } catch (error) {
+    console.error("Erro ao buscar os livros: ", error);
+  }
+};
+
 const filterBooks = () => {
   const query = searchQuery.value.toLowerCase();
-
-  // Filtro de acordo com a opção selecionada
   filteredBooks.value = products.value.filter((book) => {
     if (selectedOption.value === "Titulo e Autor") {
       return (
@@ -84,33 +63,26 @@ const filterBooks = () => {
   });
 };
 
-// const favoriteBooks: Ref<Book[]> = ref([]);
+const toggleFavorite = async (book: Book) => {
+  book.isFavorite = !book.isFavorite;
+  try {
+    await axios.patch(`http://localhost:3000/books/${book.id}`, { isFavorite: book.isFavorite });
+  } catch (error) {
+    console.error("Erro ao atualizar favorito: ", error);
+  }
+};
 
-// Módulo FAVORITOS
-// const addToFavorites = (book: Book) => {
-//   const index = favoriteBooks.value.indexOf(book);
+const goToBookPage = (bookId: number) => {
+  router.push(`/book/${bookId}`);
+};
 
-//   if (!favoriteBooks.value.includes(book)) {
-//     favoriteBooks.value.push(book);
-//     book.isFavorite = true;
-//     console.log('Livro "', book.name, '" adicionado aos favoritos.')
-//     console.log(JSON.stringify(favoriteBooks.value, null, 2));
-//   }
-//   else{
-//     favoriteBooks.value.splice(index, 1);
-//     book.isFavorite = false;
-//     console.log('Livro "', book.name, '" retirado dos favoritos.')
-//     console.log(JSON.stringify(favoriteBooks.value, null, 2))
-//   }
-// }
-
-filteredBooks.value = products.value;
-
+onMounted(fetchBooks);
 </script>
+
 
 <template>
   <div>
-    <Header/>
+    <HeaderView/>
     <section class="bg-gray-50 py-8 antialiased dark:bg-gray-900 md:py-12" style="background-color: #A8DADC">
   <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
     <!-- Heading & Filters -->
@@ -232,11 +204,15 @@ filteredBooks.value = products.value;
         </div>
         <div class="pt-2 w-full">
           <div class="pt-2 mb-2 flex items-center justify-between gap-4">
-            <a href="#" class="text-md font-semibold leading-tight text-gray-900 hover:underline dark:text-white line-clamp-1">
+            <div
+              @click="goToBookPage(product.id)"
+              class="text-md font-semibold leading-tight text-gray-900 hover:underline dark:text-white cursor-pointer line-clamp-1"
+            >
               {{ product.name }}
-            </a>
+            </div>
           </div>
         </div>
+
         
         <div class="flex items-center justify-end gap-1">
 
@@ -260,10 +236,13 @@ filteredBooks.value = products.value;
           <!-- Add to favorites button -->
           <button
             type="button"
-            class="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-          > <!--@click="addToFavorites(product)"-->
+            @click="toggleFavorite(product)"
+            :class="[
+      'rounded-lg p-2 hover:bg-gray-100 dark:hover:bg-gray-700',
+      product.isFavorite ? 'text-red-500 hover:text-red-700' : 'text-gray-500 hover:text-gray-900'
+    ]"  > 
             <span class="sr-only">Add to favorites</span>
-            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <!--:fill="product.isFavorite ? 'red' : 'none'"-->
+            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" stroke="currentColor" :fill="product.isFavorite ? 'red' : 'none'">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6C6.5 1 1 8 5.8 13l6.2 7 6.2-7C23 8 17.5 1 12 6Z" />
             </svg>
           </button>

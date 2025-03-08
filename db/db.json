@@ -1,0 +1,52 @@
+{
+  "books": [
+    {
+      "id": 1,
+      "name": "O poder do hábito: Por que fazemos o que fazemos na vida e nos negócios",
+      "image": "https://m.media-amazon.com/images/I/815iPX0SgkL._SY466_.jpg",
+      "author": "Charles Duhigg e Rafael Mantovani",
+      "isFavorite": true,
+      "subject": "Psicologia, Desenvolvimento Pessoal, Hábitos"
+    },
+    {
+      "id": 2,
+      "name": "Sapiens: Uma breve história da humanidade",
+      "image": "https://m.media-amazon.com/images/I/41FU42ESk5L._SY445_SX342_.jpg",
+      "author": "Yuval Noah Harari",
+      "isFavorite": true,
+      "subject": "História, Antropologia, Evolução Humana"
+    },
+    {
+      "id": 3,
+      "name": "A coragem de ser imperfeito",
+      "image": "https://m.media-amazon.com/images/I/61rRRbfINJL._SY466_.jpg",
+      "author": "Brené Brown",
+      "isFavorite": false,
+      "subject": "Psicologia, Vulnerabilidade, Autoaceitação"
+    },
+    {
+      "id": 4,
+      "name": "Inteligência emocional: A teoria revolucionária que redefine o que é ser inteligente",
+      "image": "https://m.media-amazon.com/images/I/41ueE4zSrAL._SY445_SX342_.jpg",
+      "author": "Daniel Goleman",
+      "isFavorite": false,
+      "subject": "Psicologia, Inteligência Emocional, Desenvolvimento Pessoal"
+    },
+    {
+      "id": 5,
+      "name": "Mindset: A nova psicologia do sucesso",
+      "image": "https://m.media-amazon.com/images/I/41suUFbw-eL._SY445_SX342_.jpg",
+      "author": "Carol S. Dweck",
+      "isFavorite": true,
+      "subject": "Psicologia, Educação, Desenvolvimento Pessoal"
+    },
+    {
+      "name": "O homem mais rico da Babilônia",
+      "image": "https://m.media-amazon.com/images/I/41Xc4wyyMIL._SY445_SX342_.jpg",
+      "author": "George S. Clason",
+      "isFavorite": false,
+      "subject": "Finanças Pessoais, Educação Financeira, Prosperidade"
+    }
+  ],
+  "auth": []
+}
