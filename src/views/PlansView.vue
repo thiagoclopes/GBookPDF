@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import HeaderView from '@/components/AppHeader.vue';
 
 </script>
 
 <template>
+    <div>
+    <HeaderView/>
     <section class="bg-white dark:bg-gray-900 h-screen">
         <div class="py-6 px-4 mx-auto max-w-screen-xl lg:py-8 lg:px-6 h-full flex flex-col justify-center">
             <a href="#" class="flex items-center justify-center mb-4 text-3xl font-semibold text-gray-900 dark:text-white">
@@ -131,6 +134,7 @@
             </div>
         </div>
     </section>
+</div>
 </template>
 
 <style scoped>

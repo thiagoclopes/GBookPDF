@@ -186,10 +186,7 @@
               <SelectGroup>
                 <SelectItem value="most_popular">Mais popular</SelectItem>
                 <SelectItem value="newest">Mais recente</SelectItem>
-                <SelectItem value="increasing_price">Preço crescente</SelectItem>
-                <SelectItem value="decreasing_price">Preço decrescente</SelectItem>
                 <SelectItem value="rating">Avaliações</SelectItem>
-                <SelectItem value="discount">Desconto</SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>
