@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import HeaderView from '@/components/AppHeader.vue';
+import axios from 'axios';
 
 interface Plan {
     title: string;
@@ -7,6 +8,7 @@ interface Plan {
     priceDuration: string;
     description: string;
     features: string[];
+    downloadsDaily: number;
 }
 
 const plans: Plan[] = [
@@ -18,7 +20,8 @@ const plans: Plan[] = [
         features: [
             'Leitura e download de 10 arquivos',
             '5 arquivos por dia'
-        ]
+        ],
+        downloadsDaily: 5
     },
     {
         title: 'Intermediário',
@@ -28,7 +31,8 @@ const plans: Plan[] = [
         features: [
             'Acesso a 5 mil livros',
             'Leitura e download de 3 arquivos diários'
-        ]
+        ],
+        downloadsDaily: 3
     },
     {
         title: 'Avançado',
@@ -38,7 +42,8 @@ const plans: Plan[] = [
         features: [
             'Acesso a 20 mil livros',
             'Leitura e download de 5 arquivos diários'
-        ]
+        ],
+        downloadsDaily: 5
     },
     {
         title: 'Profissional',
@@ -48,9 +53,12 @@ const plans: Plan[] = [
         features: [
             'Acesso a 5 mil livros',
             'Leitura e download de 5 arquivos diários'
-        ]
+        ],
+        downloadsDaily: 5
     }
 ];
+
+// Após os testes, função logPlanInfo deve ser trocada por createPreference no onClick
 
 async function createPreference(plan: Plan) {
     try {
@@ -63,7 +71,7 @@ async function createPreference(plan: Plan) {
                         title: 'Plano ' + plan.title,
                         quantity: 1,
                         unit_price: plan.price,
-                        picture_url: 'example.jpg'  
+                        picture_url: 'example.jpg'
                     }
                 ]
             })
@@ -81,13 +89,49 @@ async function createPreference(plan: Plan) {
         console.error("Erro ao criar a preferência:", error);
     }
 }
+
+async function updateAccountPlan(plan: Plan) {
+    try {
+        const response = await axios.get('http://localhost:3000/account');
+        const accountData = response.data[0];
+
+        console.log(accountData)
+
+        accountData.myPlan = plan.title;
+        console.log(plan.title)
+        accountData.downloadsDiarios = plan.downloadsDaily;
+
+        const updateResponse = await axios.patch(
+            `http://localhost:3000/account/c917`, 
+            {
+                myPlan: accountData.myPlan,
+                downloadsDiarios: accountData.downloadsDiarios
+            }
+        );
+
+        if (updateResponse.status === 200) {
+            console.log('Plano e downloads diários atualizados com sucesso!');
+        } else {
+            console.error('Erro ao atualizar dados da conta');
+        }
+
+    } catch (error) {
+        console.error("Erro ao atualizar o plano e downloads diários:", error);
+    }
+}
+
+function logPlanInfo(plan: Plan) {
+    console.log(`Plano escolhido: ${plan.title}`);
+    console.log(`Número de downloads diários: ${plan.downloadsDaily}`);
+    updateAccountPlan(plan); 
+}
 </script>
 
 <template>
     <div>
         <HeaderView />
-        <section class="bg-white dark:bg-gray-900 h-screen">
-            <div class="py-6 px-4 mx-auto max-w-screen-xl lg:py-8 lg:px-6 h-full flex flex-col justify-center">
+        <section class="bg-white dark:bg-gray-900 h-screen py-4">
+            <div class="py-6 px-4 mx-auto max-w-screen-xl lg:py-8 lg:px-6 h-full flex flex-col">
                 <a href="#" class="flex items-center justify-center mb-4 text-3xl font-semibold text-gray-900 dark:text-white">
                     <img class="w-8 h-8 mr-2" src="../assets/logo-gbookpdf.png" alt="logo">
                     GBookPDF    
@@ -118,7 +162,7 @@ async function createPreference(plan: Plan) {
                                 </li>
                             </ul>
                             <a href="#" class="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-4 py-1.5 text-center dark:text-white dark:focus:ring-primary-900">Get started</a>
-                            <a href="#" @click="createPreference(plan)" class="mt-4 text-white bg-blue-500 hover:bg-blue-900 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-4 py-1.5 text-center dark:text-white dark:focus:ring-gray-900">Escolher plano</a>
+                            <a href="#" @click="logPlanInfo(plan)" class="mt-4 text-white bg-blue-500 hover:bg-blue-900 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-4 py-1.5 text-center dark:text-white dark:focus:ring-gray-900">Escolher plano</a>
                         </div>
                     </div>
                 </div>

@@ -73,6 +73,42 @@
     }
   };
 
+  async function openBook() {
+    try {
+        const response = await axios.get('http://localhost:3000/account');
+        const accountData = response.data[0];
+
+        console.log(accountData);
+
+        if (accountData.downloadsDiarios > 0) {
+            accountData.downloadsDiarios -= 1;
+
+            const updateResponse = await axios.patch(
+                `http://localhost:3000/account/c917`,  
+                {
+                    downloadsDiarios: accountData.downloadsDiarios
+                }
+            );
+
+            if (updateResponse.status === 200) {
+                console.log('Número de downloads diários atualizado com sucesso!');
+            } else {
+                console.error('Erro ao atualizar o número de downloads diários');
+            }
+
+            if (accountData.downloadsDiarios === 0) {
+                alert('Você atingiu o limite de downloads diários!');
+            }
+        } else {
+            alert('Você não tem mais downloads diários disponíveis!');
+        }
+
+    } catch (error) {
+        console.error("Erro ao atualizar o número de downloads diários:", error);
+    }
+}
+
+
   const goToBookPage = (bookId: number) => {
     router.push(`/book/${bookId}`);
   };
@@ -86,7 +122,6 @@
     <HeaderView/>
     <section class="bg-gray-50 py-8 antialiased dark:bg-gray-900 md:py-12" style="background-color: #A8DADC">
   <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
-    <!-- Heading & Filters -->
     <div class="mb-4 items-end justify-between space-y-4 md:flex md:space-y-0 md:mb-8">
       <div>
         <nav class="flex" aria-label="Breadcrumb">
@@ -226,6 +261,7 @@
 
           <!-- Quick look button -->
           <button
+          @click="openBook()"
             type="button"
             data-tooltip-target="tooltip-quick-look"
             class="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
