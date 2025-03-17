@@ -28,6 +28,7 @@
     author: string;
     subject: string;
     isFavorite: boolean;
+    pdf: string;
   }
 
   const products: Ref<Book[]> = ref([]);
@@ -73,7 +74,9 @@
     }
   };
 
-  async function openBook() {
+  async function openBook(book: Book) {
+    await loadPdfPath(book);
+
     try {
         const response = await axios.get('http://localhost:3000/account');
         const accountData = response.data[0];
@@ -106,7 +109,29 @@
     } catch (error) {
         console.error("Erro ao atualizar o número de downloads diários:", error);
     }
-}
+  }
+
+  const pdfPath = ref<string>('');
+
+  const loadPdfPath = async (book: Book) => {
+    
+    try {
+      const response = await axios.get(`http://localhost:3000/books/${book.id}`);
+      pdfPath.value = response.data.pdf;  
+      openPDF()
+    } catch (error) {
+      console.error("Erro ao carregar o PDF: ", error);
+    }
+  };
+
+  const openPDF = () => {
+    if (pdfPath.value) {
+      const fullPdfUrl = `${window.location.origin}${pdfPath.value}`;
+      window.open(fullPdfUrl, '_blank');
+    } else {
+      alert('PDF não encontrado!');
+    }
+  };
 
 
   const goToBookPage = (bookId: number) => {
@@ -261,7 +286,7 @@
 
           <!-- Quick look button -->
           <button
-          @click="openBook()"
+          @click="openBook(product)"
             type="button"
             data-tooltip-target="tooltip-quick-look"
             class="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
